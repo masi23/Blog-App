@@ -1,29 +1,29 @@
 import { Router } from "express";
-import CategoryController from "@/controllers/category.controller";
+import { SavedListController } from "@/controllers/savedList.controller";
 import { authMiddleware } from "@/middlewares/auth.middleware";
 import { roleMiddleware as requireRole } from "@/middlewares/role.middleware";
 
 const router = Router();
 
-router.get("/", CategoryController.getAll);
-router.get("/:id", CategoryController.getById);
+router.get("/", SavedListController.getAll);
+router.get("/:id", SavedListController.getById);
 router.post(
   "/",
   authMiddleware,
   requireRole("ADMIN"),
-  CategoryController.create
+  SavedListController.create
 );
 router.put(
   "/:id",
   authMiddleware,
   requireRole("ADMIN"),
-  CategoryController.update
+  SavedListController.update
 );
 router.delete(
   "/:id",
   authMiddleware,
   requireRole("ADMIN"),
-  CategoryController.remove
+  SavedListController.remove
 );
 
 export default router;

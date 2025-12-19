@@ -123,3 +123,6 @@ out/
 .svelte-kit
 
 /src/generated/prisma
+
+#todo list
+todo.txt

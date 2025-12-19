@@ -23,5 +23,5 @@ export const login = async (req: Request, res: Response) => {
 
   const { password: _, ...safeUser } = user;
 
-  res.json({ safeUser, token });
+  res.json({ user: safeUser, token });
 };

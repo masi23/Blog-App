@@ -6,11 +6,16 @@ import { errorHandler } from "./middlewares/error-handler";
 import UserRouter from "./routers/user.route";
 import CategoryRouter from "./routers/category.route";
 import AuthRouter from "./routers/auth.route";
+import TagRouter from "./routers/tag.route";
+import PostRouter from "./routers/post.route";
+import SavedListRouter from "./routers/savedList.route";
+import LikeRouter from "./routers/like.route";
+import CommentRouter from "./routers/comment.route";
 
 dotenv.config();
 
 const app = express();
-const prisma = new PrismaClient();
+// const prisma = new PrismaClient();
 
 app.use(express.json());
 
@@ -21,6 +26,11 @@ app.get("/", (req, res) => {
 app.use("/", AuthRouter);
 app.use("/users", UserRouter);
 app.use("/categories", CategoryRouter);
+app.use("/tags", TagRouter);
+app.use("/posts", PostRouter);
+app.use("/savedLists", SavedListRouter);
+app.use("/likes", LikeRouter);
+app.use("/comments", CommentRouter);
 
 app.use(errorHandler);
 

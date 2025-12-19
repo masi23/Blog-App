@@ -24,9 +24,7 @@ const UserServices = {
       },
     });
 
-    if (!user) return undefined;
-
-    return user;
+    return user ?? undefined;
   },
   getByEmail: async (email: string): Promise<UserModel | undefined> => {
     const user = await prisma.user.findUnique({
@@ -34,8 +32,7 @@ const UserServices = {
         email: email,
       },
     });
-    if (!user) return undefined;
-    return user;
+    return user ?? undefined;
   },
   create: async (params: UserModel): Promise<SafeUser> => {
     const user = await prisma.user.create({
@@ -50,15 +47,6 @@ const UserServices = {
     id: number,
     params: Partial<UserModel>
   ): Promise<SafeUser | undefined> => {
-    if (!id) {
-      console.error("Params has no ID");
-      return undefined;
-    }
-    const user = await prisma.user.findUnique({
-      where: {
-        id: id,
-      },
-    });
     const updatedUser = await prisma.user.update({
       where: {
         id: id,
@@ -67,14 +55,14 @@ const UserServices = {
         ...params,
       },
     });
-    return updatedUser;
+    return updatedUser ?? undefined;
   },
 
   remove: async (id: number): Promise<SafeUser | undefined> => {
     const deletedUser = await prisma.user.delete({
       where: { id: id },
     });
-    return deletedUser;
+    return deletedUser ?? undefined;
   },
 };
 

@@ -1,6 +1,6 @@
 import { PrismaClient } from "@/generated/prisma/client";
 import type { CategoryModel } from "@/generated/prisma/models";
-
+import type { SafeUser } from "@/types/user.types";
 const prisma = new PrismaClient();
 
 const CategoryService = {
@@ -8,33 +8,34 @@ const CategoryService = {
     const categories = await prisma.category.findMany();
     return categories;
   },
+
   getById: async (id: number): Promise<CategoryModel | undefined> => {
-    if (!id) throw new Error("Category id not provided.");
     const category = await prisma.category.findUnique({
       where: {
         id: id,
       },
     });
-    if (!category) return undefined;
-    return category;
+    return category ?? undefined;
   },
-  create: async (params: CategoryModel): Promise<CategoryModel | undefined> => {
-    if (!params) {
-      throw new Error("Category params not provided.");
-    }
+
+  create: async (
+    user: SafeUser,
+    params: CategoryModel
+  ): Promise<CategoryModel | undefined> => {
+    const userId = user.id;
     const newCategory = await prisma.category.create({
       data: {
         ...params,
+        authorId: userId,
       },
     });
     return newCategory;
   },
+
   update: async (
     id: number,
     params: Partial<CategoryModel>
   ): Promise<CategoryModel | undefined> => {
-    if (!id) throw new Error("Category id not provided.");
-    if (!params) throw new Error("Category params not provided.");
     const updatedCategory = await prisma.category.update({
       where: {
         id: id,
@@ -43,16 +44,20 @@ const CategoryService = {
         ...params,
       },
     });
-    return updatedCategory;
+    return updatedCategory ?? undefined;
   },
-  remove: async (id: number): Promise<CategoryModel | undefined> => {
-    if (!id) throw new Error("Category id not provided.");
+
+  remove: async (
+    user: SafeUser,
+    id: number
+  ): Promise<CategoryModel | undefined> => {
     const removedCategory = await prisma.category.delete({
       where: {
         id: id,
+        authorId: user.id,
       },
     });
-    return removedCategory;
+    return removedCategory ?? undefined;
   },
 };
 
