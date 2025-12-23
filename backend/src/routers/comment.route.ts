@@ -7,23 +7,8 @@ const router = Router();
 
 router.get("/", CommentController.getAll);
 router.get("/:id", CommentController.getById);
-router.post(
-  "/",
-  authMiddleware,
-  requireRole("ADMIN"),
-  CommentController.create
-);
-router.put(
-  "/:id",
-  authMiddleware,
-  requireRole("ADMIN"),
-  CommentController.update
-);
-router.delete(
-  "/:id",
-  authMiddleware,
-  requireRole("ADMIN"),
-  CommentController.remove
-);
+router.post("/", authMiddleware, CommentController.create);
+router.put("/:id", authMiddleware, CommentController.update);
+router.delete("/:id", authMiddleware, CommentController.remove);
 
 export default router;

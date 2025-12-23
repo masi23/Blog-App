@@ -1,6 +1,7 @@
 import type { Request, Response } from "express";
 import UserServices from "@/services/user.service";
 import { hashPassword } from "@/services/auth.service";
+import type { ExtendedRequest } from "@/types/request.types";
 
 const UserController = {
   getAll: async (req: Request, res: Response) => {
@@ -27,11 +28,34 @@ const UserController = {
   },
   update: async (req: Request, res: Response) => {
     const id = Number(req.params.id);
-    const updatedUser = await UserServices.update(id, req.body);
+    const { password, ...rest } = req.body;
+    let data = {};
+    if (password !== undefined) {
+      const hashed = await hashPassword(password);
+      data = {
+        password,
+        ...rest,
+      };
+    } else {
+      data = {
+        ...rest,
+      };
+    }
+    const updatedUser = await UserServices.update(id, data);
+    const extendedReq = req as ExtendedRequest;
+    const user = extendedReq.user;
+    if (user === undefined) throw new Error("User not provided.");
+    if (user.id !== id && user.role !== "ADMIN")
+      throw new Error("Non-admin users can't edit other users.");
     res.json(updatedUser);
   },
   remove: async (req: Request, res: Response) => {
     const id = Number(req.params.id);
+    const extendedReq = req as ExtendedRequest;
+    const user = extendedReq.user;
+    if (user === undefined) throw new Error("User not provided.");
+    if (user.id !== id && user.role !== "ADMIN")
+      throw new Error("Non-admin users can't remove other users.");
     const removedUser = await UserServices.remove(id);
     res.json(removedUser);
   },

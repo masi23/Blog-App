@@ -1,5 +1,6 @@
 import { PrismaClient } from "@prisma/client";
 import type { UserModel } from "@prisma/models";
+import type { UserCreateInput } from "@prisma/models";
 
 const prisma = new PrismaClient();
 
@@ -34,7 +35,7 @@ const UserServices = {
     });
     return user ?? undefined;
   },
-  create: async (params: UserModel): Promise<SafeUser> => {
+  create: async (params: UserCreateInput): Promise<SafeUser> => {
     const user = await prisma.user.create({
       data: {
         ...params,

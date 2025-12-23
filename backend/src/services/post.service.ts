@@ -26,7 +26,7 @@ export const PostService = {
 
   create: async (user: SafeUser, params: PostModel): Promise<PostModel> => {
     const userId = user.id;
-    const { title, imageUrl, categoryId } = params;
+    const { title, imageUrl, categoryId, postStatus } = params;
     const contentBlocks: Prisma.InputJsonValue =
       params.contentBlocks as Prisma.InputJsonValue;
     const post = await prisma.post.create({
@@ -36,6 +36,7 @@ export const PostService = {
         categoryId: categoryId,
         contentBlocks: contentBlocks,
         authorId: userId,
+        postStatus: postStatus || "DRAFT",
       },
     });
     return post;

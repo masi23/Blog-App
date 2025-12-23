@@ -7,13 +7,8 @@ const router = Router();
 
 router.get("/", LikeController.getAll);
 router.get("/:id", LikeController.getById);
-router.post("/:", authMiddleware, requireRole("ADMIN"), LikeController.create);
-router.put("/:id", authMiddleware, requireRole("ADMIN"), LikeController.update);
-router.delete(
-  "/:id",
-  authMiddleware,
-  requireRole("ADMIN"),
-  LikeController.remove
-);
+router.post("/:", authMiddleware, LikeController.create);
+router.put("/:id", authMiddleware, LikeController.update);
+router.delete("/:id", authMiddleware, LikeController.remove);
 
 export default router;

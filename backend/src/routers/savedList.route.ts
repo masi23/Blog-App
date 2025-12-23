@@ -7,23 +7,8 @@ const router = Router();
 
 router.get("/", SavedListController.getAll);
 router.get("/:id", SavedListController.getById);
-router.post(
-  "/",
-  authMiddleware,
-  requireRole("ADMIN"),
-  SavedListController.create
-);
-router.put(
-  "/:id",
-  authMiddleware,
-  requireRole("ADMIN"),
-  SavedListController.update
-);
-router.delete(
-  "/:id",
-  authMiddleware,
-  requireRole("ADMIN"),
-  SavedListController.remove
-);
+router.post("/", authMiddleware, SavedListController.create);
+router.put("/:id", authMiddleware, SavedListController.update);
+router.delete("/:id", authMiddleware, SavedListController.remove);
 
 export default router;

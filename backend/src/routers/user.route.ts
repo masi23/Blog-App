@@ -7,13 +7,8 @@ const router = Router();
 
 router.get("/", UserController.getAll);
 router.get("/:id", UserController.getById);
-router.post("/", authMiddleware, requireRole("ADMIN"), UserController.create);
-router.put("/:id", authMiddleware, requireRole("ADMIN"), UserController.update);
-router.delete(
-  "/:id",
-  authMiddleware,
-  requireRole("ADMIN"),
-  UserController.remove
-);
+router.post("/", authMiddleware, UserController.create);
+router.put("/:id", authMiddleware, UserController.update);
+router.delete("/:id", authMiddleware, UserController.remove);
 
 export default router;
