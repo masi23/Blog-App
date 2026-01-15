@@ -24,9 +24,15 @@ export const PostService = {
     return post ?? undefined;
   },
 
+  getByCategories: async (categoriesId: number[]): Promise<PostModel[]> => {
+    return prisma.post.findMany({
+      where: categoriesId.length ? { categoryId: { in: categoriesId } } : {},
+    });
+  },
+
   create: async (user: SafeUser, params: PostModel): Promise<PostModel> => {
     const userId = user.id;
-    const { title, imageUrl, categoryId, postStatus } = params;
+    const { title, imageUrl, categoryId, postStatus, description } = params;
     const contentBlocks: Prisma.InputJsonValue =
       params.contentBlocks as Prisma.InputJsonValue;
     const post = await prisma.post.create({
@@ -37,6 +43,7 @@ export const PostService = {
         contentBlocks: contentBlocks,
         authorId: userId,
         postStatus: postStatus || "DRAFT",
+        description: description,
       },
     });
     return post;

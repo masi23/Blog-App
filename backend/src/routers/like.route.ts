@@ -7,7 +7,7 @@ const router = Router();
 
 router.get("/", LikeController.getAll);
 router.get("/:id", LikeController.getById);
-router.post("/:", authMiddleware, LikeController.create);
+router.post("/:id", authMiddleware, LikeController.create);
 router.put("/:id", authMiddleware, LikeController.update);
 router.delete("/:id", authMiddleware, LikeController.remove);
 

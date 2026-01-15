@@ -34,3 +34,7 @@ export type UserCreate = Pick<
   User,
   "email" | "name" | "password" | "role" | "birthDate"
 >;
+
+export type UserStatus = {
+  authenticated: boolean;
+};

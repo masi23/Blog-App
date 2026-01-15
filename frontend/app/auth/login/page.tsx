@@ -9,7 +9,7 @@ export default function Page() {
       <p className="subtle-text text-center mb-4 mt-2">
         Enter your e-mail and password to access your account.
       </p>
-      {LoginForm()}
+      <LoginForm></LoginForm>
       <p className="subtle-text text-center mt-5">
         Don't have an account?
         <Link className="pl-1" href={routes.register}>

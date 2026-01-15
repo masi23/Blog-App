@@ -1,6 +1,6 @@
 const endpoints = {
   //auth
-  login: "/auth/login",
+  login: "/login",
   register: "/users/create",
   users: "/users",
   posts: "/posts",
@@ -9,6 +9,7 @@ const endpoints = {
   savedLists: "/savedLists",
   comments: "/comments",
   likes: "/likes",
+  verifyToken: "/verifyToken",
 };
 
 export default endpoints;

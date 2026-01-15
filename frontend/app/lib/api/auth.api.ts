@@ -1,5 +1,5 @@
 import fetchApi from "./client";
-import type { SafeUser } from "../types";
+import type { SafeUser, UserStatus } from "../types";
 import endpoints from "./endpoints";
 
 //each method returns/forwards promise object

@@ -1,12 +1,12 @@
-import dotenv from "dotenv";
-
-dotenv.config();
+import MainPage from "./ui/mainPage";
+import Navbar from "./ui/navbar";
 
 export default function Home() {
   return (
-    <div className="">
-      <main className="">
-        <h1>Home Page</h1>
+    <div>
+      <Navbar></Navbar>
+      <main className="flex flex-col items-center">
+        <MainPage></MainPage>
       </main>
     </div>
   );

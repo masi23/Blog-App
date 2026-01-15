@@ -57,6 +57,7 @@ model Post {
   savedLists SavedList[] @relation("PostSavedLists")
   categoryId Int
   category Category @relation(fields: [categoryId], references: [id])
+  description String @db.VarChar(255)
 }
 
 model Comment {

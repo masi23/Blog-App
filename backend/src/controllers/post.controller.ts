@@ -5,8 +5,22 @@ import { isSafeUser } from "@/types/request.types";
 
 export const PostController = {
   getAll: async (req: Request, res: Response) => {
+    const extendedReq = req as ExtendedRequest;
+    let authUser = extendedReq.user;
+    if (extendedReq.user) {
+      //...
+    }
+
+    //get posts by categories
+    const categoryParams = req.query.categories as string;
+    if (categoryParams) {
+      const categoriesId = categoryParams.split(",").map(Number);
+      const posts = await PostService.getByCategories(categoriesId);
+      res.json(posts);
+    }
+    //get all posts
     const posts = await PostService.getAll();
-    res.json(posts);
+    return res.json(posts);
   },
 
   getById: async (req: Request, res: Response) => {

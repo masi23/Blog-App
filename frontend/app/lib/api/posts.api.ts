@@ -4,7 +4,7 @@ import endpoints from "./endpoints";
 
 export const PostApi = {
   getAll: () => {
-    return fetchApi<Post>(endpoints.posts, {
+    return fetchApi<Post[]>(endpoints.posts, {
       method: "GET",
     });
   },
@@ -13,9 +13,15 @@ export const PostApi = {
       method: "GET",
     });
   },
+  getByCategory: (categories: number[]) => {
+    return fetchApi<Post[]>(`${endpoints.posts}?categories=${categories}`, {
+      method: "GET",
+    });
+  },
   create: (params: any[]) => {
     return fetchApi<Post>(endpoints.posts, {
       method: "POST",
+      body: {},
     });
   },
   update: (id: number) => {

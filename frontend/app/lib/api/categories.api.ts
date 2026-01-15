@@ -4,7 +4,7 @@ import endpoints from "./endpoints";
 
 export const CategoryApi = {
   getAll: () => {
-    return fetchApi<Category>(endpoints.categories, {
+    return fetchApi<Category[]>(endpoints.categories, {
       method: "GET",
     });
   },
